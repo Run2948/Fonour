@@ -1,0 +1,13 @@
+{
+  "name": "Fonour.MVC",
+  "private": true,
+	"dependencies": {
+		"font-awesome": "Font-Awesome#v4.7.0",
+		"bootstrap": "3.3.6",
+		"jquery.cookie": "^1.4.1",
+		"layer": "^3.1.1",
+		"iCheck": "^1.0.2",
+		"select2": "4.0.3",
+		"jstree": "3.3.3"
+	}
+}
