@@ -1,30 +1,33 @@
-# Asp.Net Core È¨ÏŞ¹ÜÀíÏµÍ³
+# Asp.Net Core æƒé™ç®¡ç†ç³»ç»Ÿ
 
-## Code First ²Ù×÷²½Öè
-* Ê¹ÓÃ³ÌĞò°ü¹ÜÀíÆ÷¿ØÖÆÌ¨(Ç°Ìá°²×° ...Sqlsever¡¢...SqlSever.Design )
+## Code First æ“ä½œæ­¥éª¤
+* ä½¿ç”¨ç¨‹åºåŒ…ç®¡ç†å™¨æ§åˆ¶å°(å‰æå®‰è£… Microsoft.EntityFrameworkCoreã€Microsoft.EntityFrameworkCore.Toolsã€Pomelo.EntityFrameworkCore.MySqlã€Pomelo.EntityFrameworkCore.MySql.Design)
   * `Add-Migration Init`
   * `Update-DataBase`
   * `Remove-Migration `
-* Ê¹ÓÃ .NET Core CLI ÃüÁî
+* ä½¿ç”¨ .NET Core CLI å‘½ä»¤
   * `dotnet ef migrations add init`
   * `dotnet ef database update`*
 
-## ÏîÄ¿Õ¹Ê¾
-* µÇÂ¼½çÃæ
-    ![µÇÂ¼½çÃæ](docs/1.png)
-* »¶Ó­½çÃæ
-    ![»¶Ó­½çÃæ](docs/2.png)
-* ×éÖ¯¹ÜÀí½çÃæ
-    ![×éÖ¯¹ÜÀí½çÃæ](docs/3.png)
-* ½ÇÉ«¹ÜÀí½çÃæ
-    ![½ÇÉ«¹ÜÀí½çÃæ](docs/4.png)
-* ÓÃ»§¹ÜÀí½çÃæ
-    ![ÓÃ»§¹ÜÀí½çÃæ](docs/5.png)
-* ²Ëµ¥¹ÜÀí½çÃæ
-    ![²Ëµ¥¹ÜÀí½çÃæ](docs/6.png)
+## é¡¹ç›®å±•ç¤º
+* ç™»å½•ç•Œé¢
+    ![ç™»å½•ç•Œé¢](docs/1.png)
+* æ¬¢è¿ç•Œé¢
+    ![æ¬¢è¿ç•Œé¢](docs/2.png)
+* ç»„ç»‡ç®¡ç†ç•Œé¢
+    ![ç»„ç»‡ç®¡ç†ç•Œé¢](docs/3.png)
+* è§’è‰²ç®¡ç†ç•Œé¢
+    ![è§’è‰²ç®¡ç†ç•Œé¢](docs/4.png)
+* ç”¨æˆ·ç®¡ç†ç•Œé¢
+    ![ç”¨æˆ·ç®¡ç†ç•Œé¢](docs/5.png)
+* èœå•ç®¡ç†ç•Œé¢
+    ![èœå•ç®¡ç†ç•Œé¢](docs/6.png)
 
-## ³£¼ûÎÊÌâ
-### 1.[ÔÚ Visual Studio 2017 ÖĞÊ¹ÓÃ Bower ¹ÜÀíÇ°¶Ë¿ò¼Ü](https://blog.csdn.net/qq_33303204/article/details/81323512)
-### 2.[Asp.net Core ¶ÁÈ¡ÅäÖÃÎÄ¼ş - appsettings.json](https://www.cnblogs.com/yuangang/p/5736892.html)
-### 3.[EF Core Ç¨ÒÆ¹ı³ÌÓöµ½EF Core tools version°æ±¾²»Ïà·ûµÄ½â¾ö·½°¸](https://www.cnblogs.com/duanyong/p/10018025.html)
-### 4.[¹ØÓÚCannot resolve scoped service from root provi...](https://www.jianshu.com/p/8e928947d833)
+## å¸¸è§é—®é¢˜
+### 1.[åœ¨ Visual Studio 2017 ä¸­ä½¿ç”¨ Bower ç®¡ç†å‰ç«¯æ¡†æ¶](https://blog.csdn.net/qq_33303204/article/details/81323512)
+### 2.[Asp.net Core è¯»å–é…ç½®æ–‡ä»¶ - appsettings.json](https://www.cnblogs.com/yuangang/p/5736892.html)
+### 3.[EF Core è¿ç§»è¿‡ç¨‹é‡åˆ°EF Core tools versionç‰ˆæœ¬ä¸ç›¸ç¬¦çš„è§£å†³æ–¹æ¡ˆ](https://www.cnblogs.com/duanyong/p/10018025.html)
+### 4.[å…³äºCannot resolve scoped service from root provi...](https://www.jianshu.com/p/8e928947d833)
+### 5. .NET Core 3.1 + EFCore 3.1 + Mysql æ•°æ®åº“
++ [.NET Core 3.1 + EFCore 3.1 é¡¹ç›®è®°å½•](https://blog.csdn.net/qq_43556517/article/details/104685015)
++ [.NET CORE 3.1 - EFCore](https://www.cnblogs.com/ya-jun/p/12886953.html)
