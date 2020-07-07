@@ -38,8 +38,7 @@ namespace Fonour.MVC
             //添加数据上下文
             services.AddDbContext<FonourDbContext>(options =>
                 {
-                    // options.UseSqlServer(Configuration.GetConnectionString("MsSql"), sqlServerOptions => sqlServerOptions.UseRowNumberForPaging());
-                    options.UseMySql(Configuration.GetConnectionString("MySql"));
+                    options.UseSqlServer(Configuration.GetConnectionString("MsSql"));
                 });
             //依赖注入
             services.AddScoped<IUserRepository, UserRepository>();
