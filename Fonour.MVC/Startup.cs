@@ -13,13 +13,11 @@ using Fonour.EntityFrameworkCore;
 using Fonour.EntityFrameworkCore.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
 
 namespace Fonour.MVC
 {
@@ -37,15 +35,12 @@ namespace Fonour.MVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.Configure<CookiePolicyOptions>(options =>
-            //{
-            //    // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-            //    options.CheckConsentNeeded = context => true;
-            //    options.MinimumSameSitePolicy = SameSiteMode.None;
-            //});
-
             //添加数据上下文
-            services.AddDbContext<FonourDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("MsSql")));
+            services.AddDbContext<FonourDbContext>(options =>
+                {
+                    // options.UseSqlServer(Configuration.GetConnectionString("MsSql"), sqlServerOptions => sqlServerOptions.UseRowNumberForPaging());
+                    options.UseMySql(Configuration.GetConnectionString("MySql"));
+                });
             //依赖注入
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserAppService, UserAppService>();
@@ -56,16 +51,14 @@ namespace Fonour.MVC
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IRoleAppService, RoleAppService>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddControllersWithViews(); //.AddNewtonsoftJson();
             //Session服务
             services.AddSession();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public async void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            loggerFactory.AddConsole();
-
             if (env.IsDevelopment())
             {
                 //开发环境异常处理
@@ -84,16 +77,18 @@ namespace Fonour.MVC
                 FileProvider = new PhysicalFileProvider(Directory.GetCurrentDirectory())
             });
 
-            //app.UseCookiePolicy();
+            app.UseRouting();
 
             //使用Session
             app.UseSession();
-            //使用Mvc，设置默认路由为系统登录
-            app.UseMvc(routes =>
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     name: "default",
-                    template: "{controller=Login}/{action=Index}/{id?}");
+                    pattern: "{controller=Login}/{action=Index}/{id?}");
             });
 
             //初始化数据

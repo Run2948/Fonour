@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Text;
 using Fonour.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Fonour.EntityFrameworkCore
 {

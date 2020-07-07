@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.438
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fonour.EntityFrameworkCore", "Fonour.EntityFrameworkCore\Fonour.EntityFrameworkCore.csproj", "{5D47852D-5C71-4399-83A5-F50FED1622F1}"
 EndProject
@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_docs", "_docs", "{973D9776
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fonour.MVC", "Fonour.MVC\Fonour.MVC.csproj", "{5860D904-1A18-4CE5-917F-2A6F80B09640}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fonour.MVC", "Fonour.MVC\Fonour.MVC.csproj", "{5860D904-1A18-4CE5-917F-2A6F80B09640}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
