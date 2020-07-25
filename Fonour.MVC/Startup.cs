@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Fonour.Application;
+using Fonour.Application.AutoMapper;
 using Fonour.Application.DepartmentApp;
 using Fonour.Application.MenuApp;
 using Fonour.Application.RoleApp;
@@ -26,8 +28,6 @@ namespace Fonour.MVC
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            //初始化映射关系
-            FonourMapper.Initialize();
         }
 
         public IConfiguration Configuration { get; }
@@ -40,6 +40,7 @@ namespace Fonour.MVC
                 {
                     options.UseSqlServer(Configuration.GetConnectionString("MsSql"));
                 });
+
             //依赖注入
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserAppService, UserAppService>();
@@ -50,9 +51,13 @@ namespace Fonour.MVC
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IRoleAppService, RoleAppService>();
 
-            services.AddControllersWithViews(); //.AddNewtonsoftJson();
+            services.AddControllersWithViews().AddNewtonsoftJson();
+
             //Session服务
             services.AddSession();
+
+            //AutoMapper
+            services.AddAutoMapper(typeof(FonourMappingProfile));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

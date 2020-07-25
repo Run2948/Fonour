@@ -14,29 +14,32 @@ namespace Fonour.Application.MenuApp
         private readonly IMenuRepository _menuRepository;
         private readonly IUserRepository _userRepository;
         private readonly IRoleRepository _roleRepository;
-        public MenuAppService(IMenuRepository menuRepository, IUserRepository userRepository, IRoleRepository roleRepository)
+        private readonly IMapper _mapper;
+
+        public MenuAppService(IMenuRepository menuRepository, IUserRepository userRepository, IRoleRepository roleRepository,IMapper mapper)
         {
             _menuRepository = menuRepository;
             _userRepository = userRepository;
             _roleRepository = roleRepository;
+            _mapper = mapper;
         }
 
         public List<MenuDto> GetAllList()
         {
             var menus = _menuRepository.GetAllList().OrderBy(it => it.SerialNumber);
             //使用AutoMapper进行实体转换
-            return Mapper.Map<List<MenuDto>>(menus);
+            return _mapper.Map<List<MenuDto>>(menus);
         }
 
         public List<MenuDto> GetMenusByParent(Guid parentId, int startPage, int pageSize, out int rowCount)
         {
             var menus = _menuRepository.LoadPageList(startPage, pageSize, out rowCount, it => it.ParentId == parentId, it => it.SerialNumber);
-            return Mapper.Map<List<MenuDto>>(menus);
+            return _mapper.Map<List<MenuDto>>(menus);
         }
 
         public bool InsertOrUpdate(MenuDto dto)
         {
-            var menu = _menuRepository.InsertOrUpdate(Mapper.Map<Menu>(dto));
+            var menu = _menuRepository.InsertOrUpdate(_mapper.Map<Menu>(dto));
             return menu != null;
         }
 
@@ -52,7 +55,7 @@ namespace Fonour.Application.MenuApp
 
         public MenuDto Get(Guid id)
         {
-            return Mapper.Map<MenuDto>(_menuRepository.Get(id));
+            return _mapper.Map<MenuDto>(_menuRepository.Get(id));
         }
         /// <summary>
         /// 根据用户获取功能菜单
@@ -65,7 +68,7 @@ namespace Fonour.Application.MenuApp
             var allMenus = _menuRepository.GetAllList(it=>it.Type == 0).OrderBy(it => it.SerialNumber);
             var currentUser = _userRepository.Get(userId);
             if ("超级管理员".Equals(currentUser.Name)) //超级管理员
-                return Mapper.Map<List<MenuDto>>(allMenus);
+                return _mapper.Map<List<MenuDto>>(allMenus);
             var user = _userRepository.GetWithRoles(userId);
             if (user == null)
                 return result;
@@ -76,7 +79,7 @@ namespace Fonour.Application.MenuApp
                 menuIds = menuIds.Union(_roleRepository.GetAllMenuListByRole(role.RoleId)).ToList();
             }
             allMenus = allMenus.Where(it => menuIds.Contains(it.Id)).OrderBy(it => it.SerialNumber);
-            return Mapper.Map<List<MenuDto>>(allMenus);
+            return _mapper.Map<List<MenuDto>>(allMenus);
         }
     }
 }
