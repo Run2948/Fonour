@@ -12,9 +12,12 @@ namespace Fonour.Application.DepartmentApp
     public class DepartmentAppService : IDepartmentAppService
     {
         private readonly IDepartmentRepository _repository;
-        public DepartmentAppService(IDepartmentRepository repository)
+        private readonly IMapper _mapper;
+
+        public DepartmentAppService(IDepartmentRepository repository,IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
         /// <summary>
         /// 获取列表
@@ -22,7 +25,7 @@ namespace Fonour.Application.DepartmentApp
         /// <returns></returns>
         public List<DepartmentDto> GetAllList()
         {
-            return Mapper.Map<List<DepartmentDto>>(_repository.GetAllList(it => it.Id != Guid.Empty).OrderBy(it => it.Code));
+            return _mapper.Map<List<DepartmentDto>>(_repository.GetAllList(it => it.Id != Guid.Empty).OrderBy(it => it.Code));
         }
 
         /// <summary>
@@ -35,7 +38,7 @@ namespace Fonour.Application.DepartmentApp
         /// <returns></returns>
         public List<DepartmentDto> GetChildrenByParent(Guid parentId, int startPage, int pageSize, out int rowCount)
         {
-            return Mapper.Map<List<DepartmentDto>>(_repository.LoadPageList(startPage, pageSize, out rowCount, it => it.ParentId == parentId, it => it.Code));
+            return _mapper.Map<List<DepartmentDto>>(_repository.LoadPageList(startPage, pageSize, out rowCount, it => it.ParentId == parentId, it => it.Code));
         }
 
         /// <summary>
@@ -45,8 +48,8 @@ namespace Fonour.Application.DepartmentApp
         /// <returns></returns>
         public bool InsertOrUpdate(DepartmentDto dto)
         {
-            var menu = _repository.InsertOrUpdate(Mapper.Map<Department>(dto));
-            return menu == null ? false : true;
+            var menu = _repository.InsertOrUpdate(_mapper.Map<Department>(dto));
+            return menu != null;
         }
 
         /// <summary>
@@ -74,7 +77,7 @@ namespace Fonour.Application.DepartmentApp
         /// <returns></returns>
         public DepartmentDto Get(Guid id)
         {
-            return Mapper.Map<DepartmentDto>(_repository.Get(id));
+            return _mapper.Map<DepartmentDto>(_repository.Get(id));
         }
     }
 }

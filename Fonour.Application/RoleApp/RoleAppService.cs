@@ -13,9 +13,12 @@ namespace Fonour.Application.RoleApp
     public class RoleAppService : IRoleAppService
     {
         private readonly IRoleRepository _repository;
-        public RoleAppService(IRoleRepository repository)
+        private readonly IMapper _mapper;
+
+        public RoleAppService(IRoleRepository repository,IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -24,7 +27,7 @@ namespace Fonour.Application.RoleApp
         /// <returns></returns>
         public List<RoleDto> GetAllList()
         {
-            return Mapper.Map<List<RoleDto>>(_repository.GetAllList().OrderBy(it => it.Code));
+            return _mapper.Map<List<RoleDto>>(_repository.GetAllList().OrderBy(it => it.Code));
         }
 
         /// <summary>
@@ -36,7 +39,7 @@ namespace Fonour.Application.RoleApp
         /// <returns></returns>
         public List<RoleDto> GetAllPageList(int startPage, int pageSize, out int rowCount)
         {
-            return Mapper.Map<List<RoleDto>>(_repository.LoadPageList(startPage, pageSize, out rowCount, null, it => it.Code));
+            return _mapper.Map<List<RoleDto>>(_repository.LoadPageList(startPage, pageSize, out rowCount, null, it => it.Code));
         }
 
         /// <summary>
@@ -46,7 +49,7 @@ namespace Fonour.Application.RoleApp
         /// <returns></returns>
         public bool InsertOrUpdate(RoleDto dto)
         {
-            var menu = _repository.InsertOrUpdate(Mapper.Map<Role>(dto));
+            var menu = _repository.InsertOrUpdate(_mapper.Map<Role>(dto));
             return menu == null ? false : true;
         }
 
@@ -75,7 +78,7 @@ namespace Fonour.Application.RoleApp
         /// <returns></returns>
         public RoleDto Get(Guid id)
         {
-            return Mapper.Map<RoleDto>(_repository.Get(id));
+            return _mapper.Map<RoleDto>(_repository.Get(id));
         }
 
         /// <summary>
@@ -95,7 +98,7 @@ namespace Fonour.Application.RoleApp
         /// <returns></returns>
         public bool UpdateRoleMenu(Guid roleId, List<RoleMenuDto> roleMenus)
         {
-            return _repository.UpdateRoleMenu(roleId, Mapper.Map<List<RoleMenu>>(roleMenus));
+            return _repository.UpdateRoleMenu(roleId, _mapper.Map<List<RoleMenu>>(roleMenus));
         }
     }
 }
