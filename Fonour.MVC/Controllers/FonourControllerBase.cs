@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Fonour.Application.UserApp;
-using Fonour.Utility.Convert;
-using Fonour.MVC.Models;
+using Fonour.Domain.Entities;
+using Fonour.MVC.Common.Extensions;
 
 namespace Fonour.MVC.Controllers
 {
@@ -14,8 +13,8 @@ namespace Fonour.MVC.Controllers
     {
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            filterContext.HttpContext.Session.TryGetValue("CurrentUser",out var result);
-            if (result == null)
+            var user = filterContext.HttpContext.Session.Get<User>("CurrentUser");
+            if (user == null)
             {
                 filterContext.Result = new RedirectResult("/Login/Index");
                 return;

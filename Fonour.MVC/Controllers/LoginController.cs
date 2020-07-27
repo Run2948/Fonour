@@ -5,9 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Fonour.Application.UserApp;
 using System.Collections.Specialized;
-using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
-using Fonour.Utility.Convert;
+using Fonour.MVC.Common.Extensions;
 using Fonour.MVC.Models;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
@@ -37,8 +35,7 @@ namespace Fonour.MVC.Controllers
                 if (user != null)
                 {
                     //记录Session
-                    HttpContext.Session.SetString("CurrentUserId", user.Id.ToString());
-                    HttpContext.Session.Set("CurrentUser", ByteConvertHelper.Object2Bytes(user));
+                    HttpContext.Session.Set("CurrentUser",user);
                     //跳转到系统首页
                     return RedirectToAction("Index", "Home");
                 }

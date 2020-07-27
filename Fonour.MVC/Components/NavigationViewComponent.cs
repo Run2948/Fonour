@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Fonour.Domain.Entities;
+using Fonour.MVC.Common.Extensions;
 
 namespace Fonour.MVC.Components
 {
@@ -21,8 +23,8 @@ namespace Fonour.MVC.Components
 
         public IViewComponentResult Invoke()
         {
-            var userId = HttpContext.Session.GetString("CurrentUserId");
-            var menus = _menuAppService.GetMenusByUser(Guid.Parse(userId));
+            var user = HttpContext.Session.Get<User>("CurrentUser");
+            var menus = _menuAppService.GetMenusByUser(user.Id);
             return View(menus);
         }
     }
