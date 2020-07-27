@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Fonour.Application;
 using Fonour.Application.AutoMapper;
 using Fonour.Application.DepartmentApp;
 using Fonour.Application.MenuApp;
@@ -13,6 +12,8 @@ using Fonour.Application.UserApp;
 using Fonour.Domain.IRepositories;
 using Fonour.EntityFrameworkCore;
 using Fonour.EntityFrameworkCore.Repositories;
+using Fonour.MVC.Common.Extensions;
+using Fonour.MVC.Common.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Fonour.MVC
 {
@@ -38,7 +40,6 @@ namespace Fonour.MVC
             //添加数据上下文
             services.AddDbContext<FonourDbContext>(options =>
                 {
-                    // options.UseSqlServer(Configuration.GetConnectionString("MsSql"), sqlServerOptions => sqlServerOptions.UseRowNumberForPaging());
                     options.UseMySql(Configuration.GetConnectionString("MySql"));
                 });
 
@@ -52,7 +53,7 @@ namespace Fonour.MVC
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IRoleAppService, RoleAppService>();
 
-            services.AddControllersWithViews().AddNewtonsoftJson();
+            services.AddControllersWithViews(options => options.Filters.Add<GlobalExceptionFilter>()).AddNewtonsoftJson();
 
             //Session服务
             services.AddSession();
@@ -62,8 +63,11 @@ namespace Fonour.MVC
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
         {
+            //添加 log4net 日志
+            loggerFactory.AddLog4Net();
+
             if (env.IsDevelopment())
             {
                 //开发环境异常处理
