@@ -122,7 +122,10 @@ function edit(id) {
                 $.each(data.userRoles, function (i, item) {
                     roleIds.push(item.roleId)
                 });
-                $("#Role").select2("val", roleIds);
+                // 只适用于 select2 单值回显
+                // $("#Role").select2("val", roleIds);
+                // select2 多选值回显方案
+                $("#Role").val(roleIds).trigger("change");
             }
             $("#Title").text("编辑用户")
             $("#editModal").modal("show");
