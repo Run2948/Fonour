@@ -39,9 +39,10 @@ namespace Fonour.MVC
         {
             //添加数据上下文
             services.AddDbContext<FonourDbContext>(options =>
-                {
-                    options.UseMySql(Configuration.GetConnectionString("MySql"));
-                });
+            {
+                var connectionString = Configuration.GetConnectionString("MySql");
+                options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+            });
 
             //依赖注入
             services.AddScoped<IUserRepository, UserRepository>();
@@ -63,11 +64,8 @@ namespace Fonour.MVC
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            //添加 log4net 日志
-            loggerFactory.AddLog4Net();
-
             if (env.IsDevelopment())
             {
                 //开发环境异常处理
@@ -81,9 +79,12 @@ namespace Fonour.MVC
 
             //使用静态文件
             app.UseStaticFiles();
-            app.UseStaticFiles(new StaticFileOptions()
+            //add the log directory as static, so we can view the log directory
+            app.UseFileServer(new FileServerOptions()
             {
-                FileProvider = new PhysicalFileProvider(Directory.GetCurrentDirectory())
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Logs")),
+                RequestPath = new PathString("/Log"),
+                EnableDirectoryBrowsing = true
             });
 
             app.UseRouting();
