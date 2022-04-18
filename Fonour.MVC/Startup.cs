@@ -79,7 +79,7 @@ namespace Fonour.MVC
 
             //使用静态文件
             app.UseStaticFiles();
-            //add the log directory as static, so we can view the log directory
+            //日志文件夹开启在线访问
             app.UseFileServer(new FileServerOptions()
             {
                 FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Logs")),
