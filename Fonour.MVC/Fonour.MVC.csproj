@@ -22,11 +22,4 @@
     <ProjectReference Include="..\Fonour.EntityFrameworkCore\Fonour.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="wwwroot\js\Department\Index.js" />
-    <None Include="wwwroot\js\Menu\Index.js" />
-    <None Include="wwwroot\js\Role\Index.js" />
-    <None Include="wwwroot\js\User\Index.js" />
-  </ItemGroup>
-
 </Project>
